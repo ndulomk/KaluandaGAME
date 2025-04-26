@@ -192,6 +192,13 @@ function animate() {
     player.switchSprite('idle')
   }
 
+
+  if (player.velocity.y < 0) {
+    player.switchSprite('jump')
+  } else if (player.velocity.y > 0) {
+    player.switchSprite('fall')
+  }
+
   if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
     enemy.velocity.x = -5
     enemy.switchSprite('run')
@@ -201,6 +208,14 @@ function animate() {
   } else {
     enemy.switchSprite('idle')
   }
+
+
+  if (enemy.velocity.y < 0) {
+    enemy.switchSprite('jump')
+  } else if (enemy.velocity.y > 0) {
+    enemy.switchSprite('fall')
+  }
+
 
   if (
     rectangularCollision({
@@ -218,10 +233,10 @@ function animate() {
     })
   }
 
-
   if (player.isAttacking && player.framesCurrent === 4) {
     player.isAttacking = false
   }
+
 
   if (
     rectangularCollision({
@@ -252,6 +267,24 @@ function animate() {
 animate()
 
 window.addEventListener('keydown', (event) => {
+  if (!player.dead) {
+    switch (event.key) {
+      case 'd':
+        keys.d.pressed = true
+        player.lastKey = 'd'
+        break
+      case 'a':
+        keys.a.pressed = true
+        player.lastKey = 'a'
+        break
+      case 'w':
+        player.velocity.y = -20
+        break
+      case ' ':
+        player.attack()
+        break
+    }
+  }
 
   if (!enemy.dead) {
     switch (event.key) {
@@ -262,6 +295,9 @@ window.addEventListener('keydown', (event) => {
       case 'ArrowLeft':
         keys.ArrowLeft.pressed = true
         enemy.lastKey = 'ArrowLeft'
+        break
+      case 'ArrowUp':
+        enemy.velocity.y = -20
         break
       case 'ArrowDown':
         enemy.attack()
@@ -281,7 +317,7 @@ window.addEventListener('keyup', (event) => {
       break
   }
 
-  // enemy keys
+
   switch (event.key) {
     case 'ArrowRight':
       keys.ArrowRight.pressed = false
