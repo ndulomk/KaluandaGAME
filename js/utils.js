@@ -20,16 +20,16 @@ function determineWinner({ player, enemy, timerId, animationId }) {
   if (player.health <= 0 && enemy.health <= 0) {
     res = 'Double K.O!';
   } else if (enemy.health <= 0) {
-    res = 'Player 1 Wins Round';
+    res = 'Player 1 GANHOU';
     window.playerWins++;
   } else if (player.health <= 0) {
-    res = 'Player 2 Wins Round';
+    res = 'Player 2 GANHOU';
     window.enemyWins++;
   } else if (player.health > enemy.health) {
-    res = 'Player 1 Wins Round (Time)';
+    res = 'Player 1 GANHOU A RODADA';
     window.playerWins++;
   } else if (enemy.health > player.health) {
-    res = 'Player 2 Wins Round (Time)';
+    res = 'Player 2 GANHOU A RODADA';
     window.enemyWins++;
   } else {
     res = 'Tie (Time)';
@@ -37,7 +37,7 @@ function determineWinner({ player, enemy, timerId, animationId }) {
   resultText.innerHTML = `${res}<br>Score P1 ${window.playerWins} - P2 ${window.enemyWins}`;
   const toWin = Math.ceil(window.maxRounds / 2);
   if (window.playerWins >= toWin || window.enemyWins >= toWin) {
-    resultText.innerHTML += `<br>Final Winner: ${window.playerWins > window.enemyWins ? 'PLAYER 1' : 'PLAYER 2'}!`;
+    resultText.innerHTML += `<br>WI MAU QUE FATIGOU: ${window.playerWins > window.enemyWins ? 'PLAYER 1' : 'PLAYER 2'}!`;
     document.getElementById('restartButton').style.display = 'block';
   } else {
     setTimeout(() => {
